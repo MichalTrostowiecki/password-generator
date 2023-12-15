@@ -94,7 +94,8 @@ let userChoice = {
     lowerCase: [false, [lowerCasedCharacters]],
     upperCase: [false, [upperCasedCharacters]],
     numeric: [false, [numericCharacters]],
-    passwordArray: [],
+    optionsArray: [],
+    userPassword: [],
 }
 
 
@@ -121,10 +122,9 @@ function getPasswordOptions() {
 function userArray(obj) {
     for (key in obj) {
         if (obj[key][0]) {
-            obj["passwordArray"] = obj["passwordArray"].concat(...obj[key][1]);
+            obj["optionsArray"] = obj["optionsArray"].concat(...obj[key][1]);
         }
     }
-    console.log(userChoice.passwordArray);
 }
 
 
@@ -136,12 +136,14 @@ function getRandom(arr) {
 
 // Function to generate password with user input
 function generatePassword() {
-    console.log("passwrod length:  " + passwordLength);
+
+    userChoice.userPassword = [];
     let n = 0;
     while (n < passwordLength) {
-        getRandom(upperCasedCharacters);
+        userChoice.userPassword.push(getRandom(userChoice.optionsArray));
         n++;
     }
+    return userChoice.userPassword.join("");
 }
 
 // Get references to the #generate element
@@ -149,10 +151,11 @@ var generateBtn = document.querySelector('#generate');
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector('#password');
+    var password = generatePassword();
+    var passwordText = document.querySelector('#password');
 
-  passwordText.value = password;
+    passwordText.value = password;
+    
 }
 
 // Add event listener to generate button
@@ -160,5 +163,5 @@ generateBtn.addEventListener('click', writePassword);
 
 
 getPasswordOptions();
-
 userArray(userChoice);
+writePassword();
