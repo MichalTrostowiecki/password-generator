@@ -88,12 +88,14 @@ var upperCasedCharacters = [
   'Z'
 ];
 
-let passwordLength = 0;
-let lowerCase = false;
-let upperCase = false;
-let numeric = false;
-let sCharacters = false;
 
+let userChoice = {
+    sCharacters: [false, [specialCharacters]],
+    lowerCase: [false, [lowerCasedCharacters]],
+    upperCase: [false, [upperCasedCharacters]],
+    numeric: [false, [numericCharacters]],
+    passwordArray: [],
+}
 
 
 // Function to prompt user for password options
@@ -105,14 +107,24 @@ function getPasswordOptions() {
     if (isNaN(passwordLength)) {
         console.log(typeof passwordLength);
         alert("You did not put the number in.");
-        return
+        
     } else {
         //This prompts evaluates to true or false based on what user choose. Ok or Cancel.
-        lowerCase = prompt("Do you want your password to include lowercase?") === "";
-        upperCase = prompt("Do you want your password to include uppercase?") === "";
-        numeric = prompt("Do you want your password to have numeric values?") === "";
-        sCharacters = prompt("Do you want to include special characters in your password?") === "";
+        userChoice.lowerCase[0] = prompt("Do you want your password to include lowercase?") === "";
+        userChoice.upperCase[0] = prompt("Do you want your password to include uppercase?") === "";
+        userChoice.numeric[0] = prompt("Do you want your password to have numeric values?") === "";
+        userChoice.sCharacters[0] = prompt("Do you want to include special characters in your password?") === "";
+        
     }
+}
+// Create array based on user choices
+function userArray(obj) {
+    for (key in obj) {
+        if (obj[key][0]) {
+            obj["passwordArray"] = obj["passwordArray"].concat(...obj[key][1]);
+        }
+    }
+    console.log(userChoice.passwordArray);
 }
 
 
@@ -124,7 +136,12 @@ function getRandom(arr) {
 
 // Function to generate password with user input
 function generatePassword() {
-
+    console.log("passwrod length:  " + passwordLength);
+    let n = 0;
+    while (n < passwordLength) {
+        getRandom(upperCasedCharacters);
+        n++;
+    }
 }
 
 // Get references to the #generate element
@@ -143,4 +160,5 @@ generateBtn.addEventListener('click', writePassword);
 
 
 getPasswordOptions();
-getRandom(upperCasedCharacters);
+
+userArray(userChoice);
