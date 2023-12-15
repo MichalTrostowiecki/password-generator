@@ -94,8 +94,11 @@ let upperCase = false;
 let numeric = false;
 let sCharacters = false;
 
+
+
 // Function to prompt user for password options
 function getPasswordOptions() {
+
     passwordLength = parseInt(prompt("How long would you want your password to be?"));
     
     
@@ -115,7 +118,8 @@ function getPasswordOptions() {
 
 // Function for getting a random element from an array
 function getRandom(arr) {
-
+   let randomElement = arr[Math.floor(Math.random() * arr.length)];
+   return randomElement;
 }
 
 // Function to generate password with user input
@@ -136,4 +140,7 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener('click', writePassword);
+
+
 getPasswordOptions();
+getRandom(upperCasedCharacters);
