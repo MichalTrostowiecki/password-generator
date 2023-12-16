@@ -90,33 +90,45 @@ var upperCasedCharacters = [
 
 
 let userChoice = {
-    sCharacters: [false, [specialCharacters]],
-    lowerCase: [false, [lowerCasedCharacters]],
-    upperCase: [false, [upperCasedCharacters]],
-    numeric: [false, [numericCharacters]],
+    sCharacters: [false, specialCharacters],
+    lowerCase: [false, lowerCasedCharacters],
+    upperCase: [false, upperCasedCharacters],
+    numeric: [false, numericCharacters],
     optionsArray: [],
     userPassword: [],
 }
+
+let passwordLength;
 
 
 // Function to prompt user for password options
 function getPasswordOptions() {
 
     passwordLength = parseInt(prompt("How long would you want your password to be?"));
-    
-    
-    if (isNaN(passwordLength)) {
-        console.log(typeof passwordLength);
-        alert("You did not put the number in.");
-        
-    } else {
-        //This prompts evaluates to true or false based on what user choose. Ok or Cancel.
-        userChoice.lowerCase[0] = confirm("Do you want your password to include lowercase?\nChoose YES (OK) / NO (CANCEL)");
-        userChoice.upperCase[0] = confirm("Do you want your password to include uppercase?\nChoose YES (OK) / NO (CANCEL)");
-        userChoice.numeric[0] = confirm("Do you want your password to have numeric values?\nChoose YES (OK) / NO (CANCEL)");
-        userChoice.sCharacters[0] = confirm("Do you want to include special characters in your password?\nChoose YES (OK) / NO (CANCEL)");
-        
+    let correctLength = false;
+
+    // unntil user provides valid password length loop will re-ask to enter correct number.
+    while (!correctLength) {
+
+        if (passwordLength >= 8 && passwordLength <= 128) {
+            correctLength = true; 
+        } else if (isNaN(passwordLength)) {
+            alert("You did not put the length of you password. Please choose between 8 and 128");
+            passwordLength = parseInt(prompt("How long would you want your password to be?"));
+        } else {
+            alert("Password must be between 8 and 128 characters. Choose the length between these numebers.")
+            passwordLength = parseInt(prompt("How long would you want your password to be?"));
+        }
     }
+    
+    
+    
+    //This prompts evaluates to true or false based on what user choose. Ok or Cancel.
+    userChoice.lowerCase[0] = confirm("Do you want your password to include lowercase?\nChoose YES (OK) / NO (CANCEL)");
+    userChoice.upperCase[0] = confirm("Do you want your password to include uppercase?\nChoose YES (OK) / NO (CANCEL)");
+    userChoice.numeric[0] = confirm("Do you want your password to have numeric values?\nChoose YES (OK) / NO (CANCEL)");
+    userChoice.sCharacters[0] = confirm("Do you want to include special characters in your password?\nChoose YES (OK) / NO (CANCEL)");
+        
     
 }
 // Create array based on user choices
@@ -147,8 +159,10 @@ function getRandom(arr) {
 // Function to generate password with user input
 function generatePassword() {
 
+    //We reset userPassword to empty array.
     userChoice.userPassword = [];
     let n = 0;
+
     while (n < passwordLength) {
         userChoice.userPassword.push(getRandom(userChoice.optionsArray));
         n++;
