@@ -111,19 +111,29 @@ function getPasswordOptions() {
         
     } else {
         //This prompts evaluates to true or false based on what user choose. Ok or Cancel.
-        userChoice.lowerCase[0] = prompt("Do you want your password to include lowercase?") === "";
-        userChoice.upperCase[0] = prompt("Do you want your password to include uppercase?") === "";
-        userChoice.numeric[0] = prompt("Do you want your password to have numeric values?") === "";
-        userChoice.sCharacters[0] = prompt("Do you want to include special characters in your password?") === "";
+        userChoice.lowerCase[0] = confirm("Do you want your password to include lowercase?\nChoose YES (OK) / NO (CANCEL)");
+        userChoice.upperCase[0] = confirm("Do you want your password to include uppercase?\nChoose YES (OK) / NO (CANCEL)");
+        userChoice.numeric[0] = confirm("Do you want your password to have numeric values?\nChoose YES (OK) / NO (CANCEL)");
+        userChoice.sCharacters[0] = confirm("Do you want to include special characters in your password?\nChoose YES (OK) / NO (CANCEL)");
         
     }
+    
 }
 // Create array based on user choices
 function userArray(obj) {
+    let optionsSelected = false;
+
     for (key in obj) {
         if (obj[key][0]) {
             obj["optionsArray"] = obj["optionsArray"].concat(...obj[key][1]);
+            optionsSelected = true;
         }
+    }
+
+    if (!optionsSelected ) {
+        alert("You did not choose any option for the password! Make sure this time you choose at least 1 option otherwise you won't be able to generate your password.")
+        getPasswordOptions();
+        userArray(obj);
     }
 }
 
@@ -161,7 +171,7 @@ function writePassword() {
 // Add event listener to generate button
 generateBtn.addEventListener('click', writePassword);
 
-
 getPasswordOptions();
 userArray(userChoice);
-writePassword();
+
+
