@@ -104,26 +104,28 @@ let passwordLength;
 // Function to prompt user for password options
 function getPasswordOptions() {
 
-    passwordLength = parseInt(prompt("How long would you want your password to be?"));
+    
     let correctLength = false;
 
     // unntil user provides valid password length loop will re-ask to enter correct number.
     while (!correctLength) {
 
+        passwordLength = parseInt(prompt("How long would you want your password to be?"));
+
         if (passwordLength >= 8 && passwordLength <= 128) {
             correctLength = true; 
         } else if (isNaN(passwordLength)) {
             alert("You did not put the length of you password. Please choose between 8 and 128");
-            passwordLength = parseInt(prompt("How long would you want your password to be?"));
+            
         } else {
             alert("Password must be between 8 and 128 characters. Choose the length between these numebers.")
-            passwordLength = parseInt(prompt("How long would you want your password to be?"));
+            
         }
     }
     
     
     
-    //This prompts evaluates to true or false based on what user choose. Ok or Cancel.
+    //This evaluates to true or false based on what user choose. Ok or Cancel.
     userChoice.lowerCase[0] = confirm("Do you want your password to include lowercase?\nChoose YES (OK) / NO (CANCEL)");
     userChoice.upperCase[0] = confirm("Do you want your password to include uppercase?\nChoose YES (OK) / NO (CANCEL)");
     userChoice.numeric[0] = confirm("Do you want your password to have numeric values?\nChoose YES (OK) / NO (CANCEL)");
